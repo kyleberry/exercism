@@ -1,15 +1,32 @@
-// This is a "stub" file.  It's a little start on your solution.
-// It's not a complete solution though; you have to write some code.
-
-// Package acronym should have a package comment that summarizes what it's about.
-// https://golang.org/doc/effective_go.html#commentary
+// Package acronym returns an acronym from input
 package acronym
+
+import (
+	"regexp"
+	"strings"
+	"unicode"
+)
+
+// removeLower uses srings.Map to iterate over a string, removing lower case using unicode.IsLower
+func removeLower(s string) string {
+	return strings.Map(func(r rune) rune {
+		if unicode.IsLower(r) {
+			return -1
+		}
+		return r
+	}, s)
+}
 
 // Abbreviate should have a comment documenting it.
 func Abbreviate(s string) string {
-	// Write some code here to pass the test suite.
-	// Then remove all the stock comments.
-	// They're here to help you get started but they only clutter a finished solution.
-	// If you leave them in, reviewers may protest!
-	return ""
+	// Make everything lowercase first
+	lower := strings.ToLower(s)
+	// Convert the first letter of each word to Upper
+	titleize := strings.Title(lower)
+	// Remove non alpha numeric characters
+	nonAlphaStr := regexp.MustCompile(`[^[:alnum:]\s]`).ReplaceAllString(titleize, "")
+	// Remove whitespace
+	noWhitespace := strings.Replace(nonAlphaStr, " ", "", -1)
+	// Finally return our acronym by removing lowercase letters in removeLower
+	return removeLower(noWhitespace)
 }
