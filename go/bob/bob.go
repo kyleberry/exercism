@@ -1,9 +1,9 @@
-// Package bob should have a package comment that summarizes what it's about.
+// Package bob parses input to determine Bob's responses.
 package bob
 
 import "regexp"
 
-// Parses input from Alice and gives Bob's response
+// Hey parses input from Alice and gives Bob's response
 func Hey(remark string) string {
 	var (
 		// Alice's remark regexp
