@@ -2,31 +2,21 @@
 package acronym
 
 import (
-	"regexp"
 	"strings"
-	"unicode"
 )
 
-// removeLower uses srings.Map to iterate over a string, removing lower case using unicode.IsLower
-func removeLower(s string) string {
-	return strings.Map(func(r rune) rune {
-		if unicode.IsLower(r) {
-			return -1
-		}
-		return r
-	}, s)
-}
-
-// Abbreviate should have a comment documenting it.
+// Abbreviate removes separators, converts all letters to Upper, the pulls out
+// the first letter of each word by splitting the string on whitespace using
+// strings.Fields and range in a for loop.
 func Abbreviate(s string) string {
-	// Make everything lowercase first
-	lower := strings.ToLower(s)
-	// Convert the first letter of each word to Upper
-	titleize := strings.Title(lower)
-	// Remove non alpha numeric characters
-	nonAlphaStr := regexp.MustCompile(`[^[:alnum:]\s]`).ReplaceAllString(titleize, "")
-	// Remove whitespace
-	noWhitespace := strings.Replace(nonAlphaStr, " ", "", -1)
-	// Finally return our acronym by removing lowercase letters in removeLower
-	return removeLower(noWhitespace)
+
+	var abbreviation string
+
+	noSeparator := strings.ToUpper(strings.Replace(s, "-", " ", -1))
+
+	for _, words := range strings.Fields(noSeparator) {
+		abbreviation += words[:1]
+	}
+
+	return abbreviation
 }
