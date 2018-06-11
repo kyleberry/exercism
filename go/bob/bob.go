@@ -35,6 +35,9 @@ func Hey(remark string) string {
 	}
 }
 
+// isShouting determines if Alice is shouting by iterating over remark and
+// testing first if it is a letter, and second if the letter is lowercase,
+// if both tests pass, we assume Bob is being shouted at.
 func isShouting(remark string) bool {
 	var hasLetter bool
 	for _, letter := range remark {
