@@ -1,17 +1,18 @@
 // Package bob parses input to determine Bob's responses.
 package bob
 
-import "regexp"
+import (
+	"strings"
+	"unicode"
+)
 
 // Hey parses input from Alice and gives Bob's response
 func Hey(remark string) string {
 	var (
-		// Alice's remark regexp
-		question         = regexp.MustCompile(`^[\w\W\s]+\?\s*$`)
-		shouting         = regexp.MustCompile(`^[A-Z0-9\W\s]+$`)
-		shoutingQuestion = regexp.MustCompile(`^[A-Z0-9\W\s]+\?\s*$`)
-		forceful         = regexp.MustCompile(`[A-Z]`)
-		nothing          = regexp.MustCompile(`^\s*$`)
+		// Alice's remark
+		question = strings.HasSuffix(strings.TrimSpace(remark), "?")
+		shouting = isShouting(remark)
+		nothing  = strings.TrimSpace(remark) == ""
 		// Bob's responses
 		sure     = "Sure."
 		woah     = "Whoa, chill out!"
@@ -21,16 +22,28 @@ func Hey(remark string) string {
 	)
 
 	switch {
-	case shoutingQuestion.MatchString(remark) && forceful.MatchString(remark):
+	case question && shouting:
 		return calm
-	case question.MatchString(remark):
+	case question:
 		return sure
-	case shouting.MatchString(remark) && forceful.MatchString(remark):
+	case shouting:
 		return woah
-	case nothing.MatchString(remark):
+	case nothing:
 		return fine
 	default:
 		return whatever
 	}
+}
 
+func isShouting(remark string) bool {
+	var hasLetter bool
+	for _, letter := range remark {
+		if unicode.IsLetter(letter) {
+			hasLetter = true
+			if unicode.IsLower(letter) {
+				return false
+			}
+		}
+	}
+	return hasLetter
 }
