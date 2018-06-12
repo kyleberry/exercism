@@ -2,6 +2,8 @@
 // given an age in seconds.
 package space
 
+type Planet string
+
 const (
 	// Orbital period in Earth years
 	mercuryEarthYear = 0.2408467
@@ -24,7 +26,7 @@ const (
 
 // Age calculates a persons age on a planet in the Solar System given an input
 // of planet name and age in Earth seconds
-func Age(ageInSeconds float64, planetName string) float64 {
+func Age(ageInSeconds float64, planetName Planet) float64 {
 	var ageOnPlanet float64
 	switch {
 	case planetName == "Mercury":

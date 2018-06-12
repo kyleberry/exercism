@@ -6,7 +6,7 @@ package space
 
 var testCases = []struct {
 	description string
-	planet      string
+	planet      Planet
 	seconds     float64
 	expected    float64
 }{
