@@ -4,47 +4,21 @@ package space
 
 type Planet string
 
-const (
-	// Orbital period in Earth years
-	mercuryEarthYear = 0.2408467
-	venusEarthYear   = 0.61519726
-	marsEarthYear    = 1.8808158
-	jupiterEarthYear = 11.862615
-	saturnEarthYear  = 29.447498
-	uranusEarthYear  = 84.016846
-	neptuneEarthYear = 164.79132
-	// Determine number of seconds in each planet's "year"
-	earthYearSeconds   = 31557600
-	mercuryYearSeconds = mercuryEarthYear * earthYearSeconds
-	venusYearSeconds   = venusEarthYear * earthYearSeconds
-	marsYearSeconds    = marsEarthYear * earthYearSeconds
-	jupiterYearSeconds = jupiterEarthYear * earthYearSeconds
-	saturnYearSeconds  = saturnEarthYear * earthYearSeconds
-	uranusYearSeconds  = uranusEarthYear * earthYearSeconds
-	neptuneYearSeconds = neptuneEarthYear * earthYearSeconds
-)
+const earthYearInSeconds = float64(31557600)
 
 // Age calculates a persons age on a planet in the Solar System given an input
 // of planet name and age in Earth seconds
 func Age(ageInSeconds float64, planetName Planet) float64 {
-	var ageOnPlanet float64
-	switch {
-	case planetName == "Mercury":
-		ageOnPlanet = ageInSeconds / mercuryYearSeconds
-	case planetName == "Venus":
-		ageOnPlanet = ageInSeconds / venusYearSeconds
-	case planetName == "Earth":
-		ageOnPlanet = ageInSeconds / earthYearSeconds
-	case planetName == "Mars":
-		ageOnPlanet = ageInSeconds / marsYearSeconds
-	case planetName == "Jupiter":
-		ageOnPlanet = ageInSeconds / jupiterYearSeconds
-	case planetName == "Saturn":
-		ageOnPlanet = ageInSeconds / saturnYearSeconds
-	case planetName == "Uranus":
-		ageOnPlanet = ageInSeconds / uranusYearSeconds
-	case planetName == "Neptune":
-		ageOnPlanet = ageInSeconds / neptuneYearSeconds
+	ageOnEarth := ageInSeconds / earthYearInSeconds
+	orbitalPeriodInEarthYears := map[Planet]float64{
+		"Mercury": 0.2408467,
+		"Venus":   0.61519726,
+		"Earth":   1,
+		"Mars":    1.8808158,
+		"Jupiter": 11.862615,
+		"Saturn":  29.447498,
+		"Uranus":  84.016846,
+		"Neptune": 164.79132,
 	}
-	return ageOnPlanet
+	return ageOnEarth / orbitalPeriodInEarthYears[planetName]
 }
