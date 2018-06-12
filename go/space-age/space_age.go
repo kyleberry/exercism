@@ -9,7 +9,7 @@ const earthYearInSeconds = float64(31557600)
 // Age calculates a persons age on a planet in the Solar System given an input
 // of planet name and age in Earth seconds
 func Age(ageInSeconds float64, planetName Planet) float64 {
-	ageOnEarth := ageInSeconds / earthYearInSeconds
+	ageOnPlanet := ageInSeconds / earthYearInSeconds
 	orbitalPeriodInEarthYears := map[Planet]float64{
 		"Mercury": 0.2408467,
 		"Venus":   0.61519726,
@@ -20,5 +20,5 @@ func Age(ageInSeconds float64, planetName Planet) float64 {
 		"Uranus":  84.016846,
 		"Neptune": 164.79132,
 	}
-	return ageOnEarth / orbitalPeriodInEarthYears[planetName]
+	return ageOnPlanet / orbitalPeriodInEarthYears[planetName]
 }
