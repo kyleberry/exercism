@@ -9,17 +9,17 @@ import (
 // Score does things
 func Score(input string) int {
 	var (
-		letterScores      = make(map[string]int, 26)
-		onePointLetters   = [10]string{"A", "E", "I", "O", "U", "L", "N", "R", "S", "T"}
-		twoPointLetters   = [2]string{"D", "G"}
-		threePointLetters = [4]string{"B", "C", "M", "P"}
-		fourPointLetters  = [5]string{"F", "H", "V", "W", "Y"}
-		fivePointLetters  = "K"
-		eightPointLetters = [2]string{"J", "X"}
-		tenPointLetters   = [2]string{"Q", "Z"}
+		letterScores      = make(map[rune]int, 26)
+		onePointLetters   = []rune("AEIOULNRST")
+		twoPointLetters   = []rune("DG")
+		threePointLetters = []rune("BCMP")
+		fourPointLetters  = []rune("FHVWY")
+		fivePointLetters  = []rune("K")
+		eightPointLetters = []rune("JX")
+		tenPointLetters   = []rune("QZ")
 		score             int
 	)
-	// Generate a map of scores per letter
+	// Generate a map of scores per rune
 	for i := 0; i < len(onePointLetters); i++ {
 		letterScores[onePointLetters[i]] = 1
 	}
@@ -32,7 +32,7 @@ func Score(input string) int {
 	for i := 0; i < len(fourPointLetters); i++ {
 		letterScores[fourPointLetters[i]] = 4
 	}
-	letterScores[fivePointLetters] = 5
+	letterScores[fivePointLetters[0]] = 5
 	for i := 0; i < len(eightPointLetters); i++ {
 		letterScores[eightPointLetters[i]] = 8
 	}
@@ -41,9 +41,8 @@ func Score(input string) int {
 	}
 
 	// Calculate score of input sting
-	for _, rune := range input {
-		letter := string(rune)
-		score += letterScores[strings.ToUpper(letter)]
+	for _, rune := range strings.ToUpper(input) {
+		score += letterScores[rune]
 	}
 	return score
 }
