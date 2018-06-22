@@ -4,10 +4,9 @@ package reverse
 // String converts input to runes, then iterates across the slice backwards,
 // creating a new slice, then converts the new slice back to a string.
 func String(input string) string {
-	var reversed []rune
 	runes := []rune(input)
-	for i := len(runes) - 1; i >= 0; i-- {
-		reversed = append(reversed, runes[i])
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
 	}
-	return string(reversed)
+	return string(runes)
 }
