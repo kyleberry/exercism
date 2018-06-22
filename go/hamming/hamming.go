@@ -12,7 +12,7 @@ func Distance(a, b string) (int, error) {
 		return 0, errors.New("DNA strands must be of equal length.")
 	}
 
-	for i := range a {
+	for i := 0; i < len(a); i++ {
 		if a[i] != b[i] {
 			hammingDistance++
 		}
